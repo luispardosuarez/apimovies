@@ -2,9 +2,6 @@ package dev.luispardo.apimovies.controllers;
 
 import java.util.List;
 
-// import org.aspectj.bridge.Message;
-// import org.springframework.http.HttpStatus;
-// import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,23 +13,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.luispardo.apimovies.services.IGenericService;
 import dev.luispardo.apimovies.services.MovieService;
-import dev.luispardo.apimovies.messages.Mesagge;
+import dev.luispardo.apimovies.messages.Message;
 import dev.luispardo.apimovies.models.Movie;
 
 @RestController
 @RequestMapping(path = "${api-endpoint}/movies")
 
 public class MovieController {
+
   IGenericService<Movie> service;
 
   public MovieController(MovieService service) {
     this.service = service;
   }
-
-  // public MovieService getService() {
-  // return service;
-  // }
 
   @GetMapping(path = "")
   public List<Movie> index() {
@@ -66,7 +61,7 @@ public class MovieController {
   }
 
   @DeleteMapping(path = "/{id}")
-  public ResponseEntity<HttpStatus> remove(@PathVariable("id") Long id) throws Exception {
+  public ResponseEntity<Message> remove(@PathVariable("id") Long id) throws Exception {
 
     Message delete = service.delete(id);
 

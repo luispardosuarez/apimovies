@@ -1,11 +1,12 @@
 package dev.luispardo.apimovies.models;
 
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.ManyToMany;
@@ -15,14 +16,15 @@ import jakarta.persistence.GenerationType;
 @Entity
 @Table (name = "movies")
 public class Movie {
+
   @Id
   @GeneratedValue (strategy = GenerationType.IDENTITY) @Column(name = "id_movie")
   private Long id;
 
   @ManyToMany
   @JoinTable (
-    name = "genres_movies";
-    joinColumns = @JoinColumn(name = "movie_id");
+    name = "genres_movies",
+    joinColumns = @JoinColumn(name = "movie_id"),
     inverseJoinColumns = @JoinColumn(name = "genre_id")
   )
   private Set<Genre> genres;
@@ -31,15 +33,15 @@ public class Movie {
   private String description;
   private Long running_time;
 
-  @ManyToMany
-  @JoinColumn(name= "year_id", nullable = true);
+  @ManyToOne
+  @JoinColumn(name= "year_id", nullable = true)
   private Year creation_year;
 
   public Movie(){  
   }
 
-  public Movie(String title, String description, Long running_time)
-            this.title = title;
+  public Movie(String title, String description, Long running_time) {
+        this.title = title;
         this.description = description;
         this.running_time = running_time;
     }
@@ -91,3 +93,5 @@ public class Movie {
   public void setCreation_year(Year creation_year) {
     this.creation_year = creation_year;
   }
+
+}
